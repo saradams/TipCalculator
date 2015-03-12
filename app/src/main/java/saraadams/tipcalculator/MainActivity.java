@@ -6,20 +6,40 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 
-bla bla blag
 public class MainActivity extends ActionBarActivity {
+
+    // set % of tip
+    final double TIP = .12;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button x = (Button)findViewById(R.id.calcTip);
-        x.setOnClickListener(new View.OnClickListener() {
+
+        Button calc = (Button)findViewById(R.id.btnCalculate);
+        calc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextView y = (TextView)findViewById(R.id.result);
-                y.setText("hello");
+
+                CheckBox round = (CheckBox)findViewById(R.id.chkRound);
+                EditText toPay = (EditText)findViewById(R.id.edtBillAmount);
+                double bill = Double.valueOf(toPay.getText().toString());
+                EditText res = (EditText)findViewById(R.id.txtTipResult);
+
+                if (round.isChecked()){
+                    int tip = (int)Math.round(TIP*bill);
+                    res.setText("$ "+ tip);
+                }
+                else {
+                    double tip = TIP*bill;
+                    res.setText("$ "+ tip);
+                }
+
+
             }
         });
     }
